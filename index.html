@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caio & Mayra - Nosso Casamento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body x-data="{ openMenu: false, giftModalOpen: false, selectedGift: {}, showPixMessage: false }" x-init="$store.pixCopied = false" @open-gift-modal.window="selectedGift = $event.detail.giftDetails; giftModalOpen = true"  @pix-copied.window="$store.pixCopied = true; setTimeout(() => $store.pixCopied = false, 2000)">
+    <header class="bg-white/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#home" class="font-display text-2xl text-[#5D4037]">C & M</a>
+                
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-sm uppercase tracking-wider hover:text-[#A1887F] transition-colors">Home</a>
+                    <a href="#casal" class="text-sm uppercase tracking-wider hover:text-[#A1887F] transition-colors">O Casal</a>
+                    <a href="#presentes" class="text-sm uppercase tracking-wider hover:text-[#A1887F] transition-colors">Lista de Presentes</a>
+                    <a href="#presenca" class="text-sm uppercase tracking-wider hover:text-[#A1887F] transition-colors">Confirme sua Presença</a>
+                </nav>
+
+                <div class="md:hidden">
+                    <button @click="openMenu = !openMenu" class="text-[#5D4037] focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div x-show="openMenu" @click.away="openMenu = false" class="md:hidden bg-white/95" x-transition>
+            <nav class="flex flex-col items-center py-4 space-y-4">
+                <a href="#home" @click="openMenu = false" class="text-sm uppercase tracking-wider hover:text-[#A1887F] transition-colors">Home</a>
+                <a href="#casal" @click="openMenu = false" class="text-sm uppercase tracking-wider hover:text-[#A1887F] transition-colors">O Casal</a>
+                <a href="#presentes" @click="openMenu = false" class="text-sm uppercase tracking-wider hover:text-[#A1887F] transition-colors">Lista de Presentes</a>
+                <a href="#presenca" @click="openMenu = false" class="text-sm uppercase tracking-wider hover:text-[#A1887F] transition-colors">Confirme sua Presença</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero-bg h-screen flex items-center justify-center text-white">
+            <div class="bg-black/30 absolute inset-0"></div>
+            <div class="text-center z-10 p-4">
+                 <div class="max-w-xs mx-auto mb-4 p-4 border-2 border-white/80 relative">
+                    <span class="absolute top-[-25px] left-1/2 -translate-x-1/2 bg-[#5D4037] px-2" style="background-color: rgba(0,0,0,0) !important">
+                        <svg width="50" height="50" viewBox="0 0 100 100" class="text-white fill-current"><path d="M50,0 C60,20 70,30 80,50 C70,70 60,80 50,100 C40,80 30,70 20,50 C30,30 40,20 50,0 Z" transform="rotate(45 50 50)"></path></svg>
+                    </span>
+                    <h1 class="font-display text-7xl md:text-8xl tracking-widest">C&M</h1>
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl">Caio & Mayra</h2>
+                <p class="mt-2 text-lg md:text-xl tracking-widest">10 | 01 | 2026</p>
+            </div>
+        </section>
+
+        <section id="intro" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center max-w-3xl">
+                <p class="text-base md:text-lg leading-relaxed text-[#5D4037]">
+                    Criamos esse site para compartilhar com vocês os detalhes da organização do nosso casamento. Estamos muito felizes e contamos com a presença de todos no nosso grande dia! Aqui vocês encontrarão também dicas e informações importantes. Ah, e não se esqueça de confirmar sua presença. Para nos presentear, criamos uma lista com itens simbólicos onde o valor é convertido em dinheiro. Fiquem à vontade! Aguardamos vocês no nosso grande dia!
+                </p>
+            </div>
+        </section>
+
+        <section id="countdown" class="py-16 md:py-20 bg-[#A1887F] text-white">
+            <div class="container mx-auto px-6 text-center" x-data="countdown">
+                <h2 class="text-3xl md:text-4xl font-display mb-8">Contagem Regressiva</h2>
+                <div class="grid grid-cols-4 gap-4 max-w-xl mx-auto">
+                    <div class="bg-white/80 text-[#5D4037] p-4 rounded-lg shadow-lg flex flex-col justify-center items-center">
+                        <span class="text-3xl md:text-5xl font-bold" x-text="days"></span>
+                        <span class="block text-sm">Dias</span>
+                    </div>
+                    <div class="bg-white/80 text-[#5D4037] p-4 rounded-lg shadow-lg flex flex-col justify-center items-center">
+                        <span class="text-3xl md:text-5xl font-bold" x-text="hours"></span>
+                        <span class="block text-sm">Horas</span>
+                    </div>
+                    <div class="bg-white/80 text-[#5D4037] p-4 rounded-lg shadow-lg flex flex-col justify-center items-center">
+                        <span class="text-3xl md:text-5xl font-bold" x-text="minutes"></span>
+                        <span class="block text-sm">Minutos</span>
+                    </div>
+                    <div class="bg-white/80 text-[#5D4037] p-4 rounded-lg shadow-lg flex flex-col justify-center items-center">
+                        <span class="text-3xl md:text-5xl font-bold" x-text="seconds"></span>
+                        <span class="block text-sm">Segundos</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="casal" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                <svg class="mx-auto h-12 w-auto text-[#A1887F] mb-4" fill="none" viewBox="0 0 100 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 2 C40 2 30 7 20 12 C30 17 40 22 50 22 C60 22 70 17 80 12 C70 7 60 2 50 2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M35 12 L 25 12 M75 12 L 65 12 M20 12 C 15 12 10 10 5 8 M80 12 C 85 12 90 10 95 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+
+                <h2 class="text-4xl md:text-5xl font-display mb-12 uppercase tracking-widest">O Casal</h2>
+                
+                <div class="flex justify-center items-center mb-8">
+                    <img src="images/4.jpg" alt="Foto do Casal" class="w-72 h-96 object-cover rounded-[50%] shadow-xl border-4 border-white/50 transform hover:scale-105 transition-transform duration-300">
+                </div>
+
+                
+                <p class="max-w-3xl mx-auto text-base md:text-lg leading-relaxed">
+                    Histórias de amor existem, e, às vezes, nem nós mesmos acreditamos todo o tempo que já estamos juntos. Porém, o brilho intenso e apaixonado dos nossos olhares nos fazem lembrar o porquê de chegarmos até aqui sem sentir tanto o tempo passar... Vamos nos casar! Estamos preparando tudo com muito carinho para curtirmos cada momento com nossos amigos e familiares queridos!
+                </p>
+            </div>
+        </section>
+
+
+        <section id="gallery" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <div x-data="gallery" @mouseenter="stopAutoplay" @mouseleave="startAutoplay" class="max-w-4xl mx-auto select-none">
+                    <div class="relative mb-4 bg-gray-100 rounded-lg shadow-lg aspect-[4/3]">
+                        <template x-for="(image, index) in images" :key="index">
+                            <div
+                                x-show="activeIndex === index"
+                                class="absolute inset-0"
+                                x-transition:enter="transition ease-in-out duration-700"
+                                x-transition:enter-start="opacity-0"
+                                x-transition:enter-end="opacity-100"
+                                x-transition:leave="transition ease-in-out duration-300"
+                                x-transition:leave-start="opacity-100"
+                                x-transition:leave-end="opacity-0">
+                                <img :src="image" alt="Foto do casal" class="w-full h-full object-cover rounded-lg">
+                            </div>
+                        </template>
+                        
+                        <button @click="prev()" class="absolute top-1/2 left-2 md:left-4 -translate-y-1/2 bg-white/60 hover:bg-white/90 backdrop-blur-sm rounded-full p-2 text-[#5D4037] transition-colors z-20">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        </button>
+                        <button @click="next()" class="absolute top-1/2 right-2 md:right-4 -translate-y-1/2 bg-white/60 hover:bg-white/90 backdrop-blur-sm rounded-full p-2 text-[#5D4037] transition-colors z-20">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                    </div>
+
+                    <div class="flex flex-wrap justify-center gap-2 p-2">
+                        <template x-for="(image, index) in images" :key="'thumb-'+index">
+                            <button @click="setActive(index)" class="flex-shrink-0">
+                                <img :src="image" class="w-16 h-16 md:w-20 md:h-20 object-cover rounded-md cursor-pointer transition-all duration-300"
+                                    :class="{'ring-2 ring-[#A1887F] ring-offset-2 scale-105': activeIndex === index, 'opacity-60 hover:opacity-100': activeIndex !== index}">
+                            </button>
+                        </template>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="presentes" class="py-20" x-data="giftList">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl md:text-5xl font-display section-title text-center mb-45">Lista de Presentes</h2>
+                <p class="text-center max-w-2xl mx-auto mb-12">
+                    <Strong>Sua presença é o nosso maior presente!</Strong> Mas se você também quiser nos presentear, criamos uma lista com alguns itens. O valor de cada item será revertido para nós em dinheiro para nos ajudar a montar nosso lar. <br>
+                    A <strong>lista é subjetiva</strong>, ou seja, você pode escolher qualquer <strong>valor ou produto que desejar, mesmo que não esteja listado aqui!</strong>
+                </p>
+
+                <div class="flex justify-end mb-8">
+                    <select x-model="sortOrder" class="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-[#A1887F] focus:border-[#A1887F]">
+                        <option value="default">Ordenar por</option>
+                        <option value="price-asc">Menor Preço</option>
+                        <option value="price-desc">Maior Preço</option>
+                        <option value="name-asc">Nome (A-Z)</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <template x-for="gift in visibleGifts" :key="gift.id">
+                        <div class="gift-card bg-white rounded-lg shadow-lg overflow-hidden">
+                            <img :src="gift.image" :alt="gift.name" class="w-full">
+                            <div class="gift-card-content">
+                                <div class="gift-card-title">
+                                    <h3 x-text="gift.name"></h3>
+                                </div>
+                                <p class="gift-card-price" x-text="formatCurrency(gift.price)"></p>
+                                <button @click="selectGift(gift)" class="gift-card-button w-full bg-[#5D4037] text-white py-2 px-4 rounded-md hover:bg-[#6D4C41] transition-colors">
+                                    Presentear
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <div x-show="visibleItemsCount < gifts.length" class="text-center mt-12">
+                    <button @click="showMore()" class="bg-[#5D4037] text-white py-3 px-8 rounded-md hover:bg-[#6D4C41] transition-colors font-semibold">
+                        Ver mais presentes
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <section id="presenca" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                 <h2 class="text-4xl md:text-5xl font-display section-title text-center mb-12">Confirme sua Presença</h2>
+                
+                <form id="presenceForm" onsubmit="sendPresence(event)" class="max-w-2xl mx-auto bg-gray-50 p-8 rounded-lg shadow-md">
+                    <div class="mb-4">
+                        <label for="name" class="block text-sm font-medium mb-1">Nome completo</label>
+                        <input type="text" id="name" name="name" placeholder="Insira seu nome completo" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#A1887F]">
+                    </div>
+
+                    <div class="mb-6">
+                        <span class="block text-sm font-medium mb-2">Você irá ao evento?</span>
+                        <div class="flex items-center space-x-6">
+                            <label class="flex items-center">
+                                <input type="radio" name="attending" value="Sim" class="mr-2 text-[#A1887F] focus:ring-[#A1887F]" required> Sim
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="attending" value="Não" class="mr-2 text-[#A1887F] focus:ring-[#A1887F]"> Não
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="message" class="block text-sm font-medium mb-1">Deixe uma mensagem (opcional)</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Sua mensagem..." class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#A1887F]"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-[#5D4037] text-white py-3 px-4 rounded-md hover:bg-[#6D4C41] transition-colors font-semibold">
+                        Confirmar Presença via WhatsApp
+                    </button>
+                </form>
+
+            </div>
+        </section>
+
+    </main>
+
+    <div x-show="giftModalOpen" @keydown.escape.window="giftModalOpen = false" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div @click.away="giftModalOpen = false" class="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto" x-data="giftModal">
+            <div class="p-6 border-b">
+                <h3 class="text-2xl font-display text-center" x-text="selectedGift.name"></h3>
+                <p class="text-center text-lg text-[#A1887F]" x-text="formatCurrency(selectedGift.price)"></p>
+            </div>
+
+            <div class="p-6">
+                <div class="bg-[#F9F5F2] p-4 rounded-md text-center border-2 border-[#A1887F]">
+                    <p class="font-semibold mb-2">Conclua o presente com o PIX</p>
+                    <p id="pixKey" class="font-mono bg-gray-200 p-2 rounded text-sm break-all">070.061.251-38</p>
+                    <button @click="copyPix()" class="mt-3 bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition-colors text-xs">
+                        Copiar Chave PIX
+                    </button>
+                    <div x-show="pixCopied" class="text-green-600 text-sm mt-2" x-transition>Chave PIX copiada!</div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="gifterName" class="block text-sm font-medium mb-1">Seu nome (opcional)</label>
+                    <input type="text" id="gifterName" placeholder="Deixe seu nome para sabermos quem é :)" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#A1887F] text-sm">
+                </div>
+                 <div class="mb-6">
+                    <label for="gifterMessage" class="block text-sm font-medium mb-1">Sua mensagem (opcional)</label>
+                    <textarea id="gifterMessage" rows="3" placeholder="Escreva uma mensagem para os noivos" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#A1887F]"></textarea>
+                    <button @click="sendWhatsApp()" class="w-full bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition-colors text-sm font-semibold mb-4">Enviar Mensagem</button>
+                </div>
+                 <p class="text-xs text-gray-500 mt-4 text-center">Muito obrigado pelo seu carinho e por fazer parte da nossa história!</p>
+            </div>
+
+             <div class="p-4 bg-gray-50 text-right">
+                 <button @click="giftModalOpen = false" class="text-gray-600 hover:text-gray-800">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="py-8 bg-[#A1887F] text-white text-center">
+        <p>Caio & Mayra | 10 de Janeiro de 2026</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</body>
+</html>
